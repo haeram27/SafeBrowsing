@@ -29,7 +29,7 @@ public class Threat {
 
     //ThreatEntries
     private static final String THREAT_ENTRY_TYPE_UNSPECIFIED = "THREAT_ENTRY_TYPE_UNSPECIFIED";
-    private static final String THREAT_ENTRY_TYPE_EXECUTABLE= "EXECUTABLE";
+    private static final String THREAT_ENTRY_TYPE_EXECUTABLE = "EXECUTABLE";
     private static final String THREAT_ENTRY_TYPE_IP_RANGE = "IP_RANGE";
     private static final String THREAT_ENTRY_TYPE_URL = "URL";
 
@@ -39,8 +39,7 @@ public class Threat {
     private String mPlatformType;
     private String mThreatEntryType;
 
-    public Threat(String threat, String threatType, String platformType, String threatEntryType)
-    {
+    public Threat(String threat, String threatType, String platformType, String threatEntryType) {
         /**
          * threat: target name
          *         e.g.) http://a.b.c
@@ -51,20 +50,22 @@ public class Threat {
         mThreatEntryType = threatEntryType;
     }
 
-    public Threat(Threat t)
-    {
+    public Threat(Threat t) {
         this(t.getThreat(), t.getThreatType(), t.getPlatformType(), t.getThreatEntryType());
     }
 
     public String getThreat() {
         return mThreat;
     }
+
     public String getThreatType() {
         return mThreatType;
     }
+
     public String getPlatformType() {
         return mPlatformType;
     }
+
     public String getThreatEntryType() {
         return mThreatEntryType;
     }

@@ -37,7 +37,7 @@ public abstract class QueryHandler {
     private long mRtt;
     private List<Threat> mThreatList;
 
-    protected QueryHandler(int queryType){
+    protected QueryHandler(int queryType) {
         mInvokeTime = FileUtil.getCurrentTimeString("yyyyMMddHHmmss");
 
         if (queryType > QUERY_TYPE_NONE && queryType <= QUERY_TYPE_UPDATE)
@@ -46,14 +46,32 @@ public abstract class QueryHandler {
             mQueryType = QUERY_TYPE_NONE;
     }
 
-    public int getQueryType() { return mQueryType; }
-    public List<Threat> getThreats() { return mThreatList; }
-    public String getInvokeTime() { return mInvokeTime; }
-    public void setThreats(List<Threat> threats) { mThreatList = threats; }
-    public long getRtt() { return mRtt; }
-    public void setRtt(long rtt) { mRtt = rtt; }
+    public int getQueryType() {
+        return mQueryType;
+    }
+
+    public List<Threat> getThreats() {
+        return mThreatList;
+    }
+
+    public String getInvokeTime() {
+        return mInvokeTime;
+    }
+
+    public void setThreats(List<Threat> threats) {
+        mThreatList = threats;
+    }
+
+    public long getRtt() {
+        return mRtt;
+    }
+
+    public void setRtt(long rtt) {
+        mRtt = rtt;
+    }
 
     //Callback
     public abstract void onSuccess(int numOfThreat);
+
     public abstract void onError(int errorCode);
 }

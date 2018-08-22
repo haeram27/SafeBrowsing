@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity
         Button mr1b = (Button) findViewById(R.id.id_button_MainRun1);
         mr1b.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { lookupUri(); }
+            public void onClick(View view) {
+                lookupUri();
+            }
         });
 
         mSBEngine = new SafeBrowsingOAEng(getApplicationContext());
@@ -99,15 +101,14 @@ public class MainActivity extends AppCompatActivity
         mRmlResult_TargetUrls.addChangeListener(new RealmChangeListener<RealmResults<RlmObjUrl>>() {
             @Override
             public void onChange(RealmResults<RlmObjUrl> results) {
-                Log.d(TAG,"Target changed!!");
+                Log.d(TAG, "Target changed!!");
 
                 // Query result is updated in real time
                 int count = results.size();
-                Log.d(TAG,String.format("results Size: %d", count));
+                Log.d(TAG, String.format("results Size: %d", count));
                 mTargetUrls.clear();
-                for(RlmObjUrl obj : mRmlResult_TargetUrls)
-                {
-                    if(obj.isChecked())
+                for (RlmObjUrl obj : mRmlResult_TargetUrls) {
+                    if (obj.isChecked())
                         mTargetUrls.add(obj.getUrl());
                 }
             }
@@ -176,8 +177,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void showDialog(String title, final String text)
-    {
+    private void showDialog(String title, final String text) {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -204,14 +204,13 @@ public class MainActivity extends AppCompatActivity
         aDialog.create().show();
     }
 
-    private final Handler mUIHandler = new Handler(){
+    private final Handler mUIHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             TextView tv = (TextView) findViewById(R.id.id_main_log);
-            switch (msg.what)
-            {
+            switch (msg.what) {
                 case MSG_SBENGINE_ONSUCCEFUL:
-                    final ThreatPack tp = (ThreatPack)msg.obj;
+                    final ThreatPack tp = (ThreatPack) msg.obj;
                     tv.append("\n[Success]: " + tp.invokeTime);
                     tv.append(String.format(Locale.ENGLISH,
                             "\n           Detected Threat(%d) ", tp.numOfThreat));
@@ -246,33 +245,34 @@ public class MainActivity extends AppCompatActivity
                     break;
 
                 case MSG_SBENGINE_ONERROR:
-                    int errorCode = (Integer)msg.obj;
-                    tv.append(String.format(Locale.ENGLISH,"\n[ERROR]: %d", errorCode));
+                    int errorCode = (Integer) msg.obj;
+                    tv.append(String.format(Locale.ENGLISH, "\n[ERROR]: %d", errorCode));
                     break;
             }
         }
     };
 
-    private class ThreatPack{
+    private class ThreatPack {
         int numOfThreat;
         List<Threat> threatList;
         String invokeTime;
-        private ThreatPack(String invokeTime, int numOfThreat, List<Threat> threatList)
-        {
+
+        private ThreatPack(String invokeTime, int numOfThreat, List<Threat> threatList) {
             this.numOfThreat = numOfThreat;
             this.threatList = threatList;
             this.invokeTime = invokeTime;
         }
     }
 
-    private void lookupUri()
-    {
-        if(mTargetUrls.size() <= 0) { return; }
+    private void lookupUri() {
+        if (mTargetUrls.size() <= 0) {
+            return;
+        }
 
         QueryHandler handle = new QueryHandler(QueryHandler.QUERY_TYPE_LOOKUP) {
             @Override
             public void onSuccess(int numOfThreat) {
-                Log.d(TAG,String.format("onSuccess(%d)",numOfThreat));
+                Log.d(TAG, String.format("onSuccess(%d)", numOfThreat));
 
                 Message msg = Message.obtain();
                 msg.what = MSG_SBENGINE_ONSUCCEFUL;
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onError(int errorCode) {
-                Log.d(TAG,String.format("onError(%d)",errorCode));
+                Log.d(TAG, String.format("onError(%d)", errorCode));
 
                 Message msg = Message.obtain();
                 msg.what = MSG_SBENGINE_ONERROR;

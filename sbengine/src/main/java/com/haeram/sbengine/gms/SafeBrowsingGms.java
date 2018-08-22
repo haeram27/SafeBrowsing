@@ -38,51 +38,43 @@ public class SafeBrowsingGms {
         mClient = SafetyNet.getClient(mContext);
     }
 
-    public void init(){
+    public void init() {
         Tracer.d(TAG, "initSafeBrowsing");
         mClient.initSafeBrowsing();
     }
-    public void shutdown(){
+    public void shutdown() {
         Tracer.d(TAG, "shutdownSafeBrowsing");
         mClient.shutdownSafeBrowsing();
     }
-    public void lookupUri(String url)
-    {
-        if(url != null && !url.isEmpty()) {
+    public void lookupUri(String url) {
+        if (url != null && !url.isEmpty()) {
             Tracer.d(TAG, "[Url] " + url);
 
             Thread query = new QueryThread(url);
             query.start();
-        }
-        else
-        {
+        } else {
             Tracer.e(TAG, "wrong url requested...");
         }
     }
 
-    private class QueryThread extends Thread
-    {
+    private class QueryThread extends Thread {
         private final String mUrl;
         private String mResult = null;
 
 
-        QueryThread(String url)
-        {
+        QueryThread(String url) {
             mUrl = url;
         }
 
         @Override
-        public void run()
-        {
+        public void run() {
             String result = lookupUri(mUrl);
-            if(result !=null && !result.isEmpty())
-            {
+            if(result !=null && !result.isEmpty()) {
                 Tracer.d(TAG, String.format("[lookup][Url] %s", mUrl));
                 Tracer.d(TAG, String.format("[Result]%s", result));
-            }else{
+            } else {
                 Tracer.e(TAG, String.format("Wrong Result"));
             }
-
         }
 
         private String lookupUri(String url) {
@@ -103,19 +95,17 @@ public class SafeBrowsingGms {
                     } else {
                         // Task failed with an exception
                         Exception e = task.getException();
-                        if(e instanceof ApiException)
-                        {
+                        if (e instanceof ApiException) {
                             Tracer.d(TAG, "ApiException occurred!!");
                             ApiException ae = (ApiException) e;
                             int statusCode = ae.getStatusCode();
                             Tracer.e(TAG,String.format("Code: %d", statusCode));
                             String emsg = ae.getStatusMessage();
-                            if(emsg != null && !emsg.isEmpty()) {
+                            if (emsg != null && !emsg.isEmpty()) {
                                 Tracer.e(TAG,String.format("msg: %s", emsg));
                             }
                             ae.printStackTrace();
-                        }
-                        else{
+                        } else {
                             Tracer.d(TAG, "Not ApiException occurred!!");
                             String emsg = e.getMessage();
                             if(emsg != null && !emsg.isEmpty()) {
@@ -149,8 +139,7 @@ public class SafeBrowsingGms {
                     Tracer.d(TAG, "task successful");
                     String meta = result.getMetadata();
                     Tracer.d(TAG, "{meta}: "+meta);
-                    if(meta==null || meta.isEmpty())
-                    {
+                    if(meta==null || meta.isEmpty()) {
                         Tracer.d(TAG, "Result Metadata is empty!");
                     }
 
@@ -159,8 +148,7 @@ public class SafeBrowsingGms {
                     sb.append(result.getMetadata());
                     sb.append("[Threat] ");
                     List<SafeBrowsingThreat> threatList = result.getDetectedThreats();
-                    for(SafeBrowsingThreat threat : threatList)
-                    {
+                    for (SafeBrowsingThreat threat : threatList) {
                         int type = threat.getThreatType();
                         sb.append(String.format(Locale.ENGLISH,"%d ", type));
                     }

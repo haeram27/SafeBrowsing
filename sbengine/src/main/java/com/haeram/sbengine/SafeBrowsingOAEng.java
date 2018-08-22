@@ -18,7 +18,7 @@ public final class SafeBrowsingOAEng {
     private Context mContext = null;
     private SafeBrowsingOA mEngine = null;
 
-    public SafeBrowsingOAEng(Context ctx){
+    public SafeBrowsingOAEng(Context ctx) {
         this.mContext = ctx;
         this.mEngine = new SafeBrowsingOA(mContext);
 
@@ -26,8 +26,7 @@ public final class SafeBrowsingOAEng {
         Tracer.setLogger(new SystemLogger());
     }
 
-    public boolean lookup(@NonNull LookupQuery query)
-    {
+    public boolean lookup(@NonNull LookupQuery query) {
         //Todo: check validation of url syntax
         List<String> urls = query.getReqUrls();
         QueryHandler handle = query.getHandle();
@@ -44,17 +43,16 @@ public final class SafeBrowsingOAEng {
         return mEngine.lookup(query);
     }
 
-    public void available()
-    {
-        Tracer.d(TAG,"Not supported yet");
+    public void available() {
+        Tracer.d(TAG, "Not supported yet");
     }
-    public void updateRecent()
-    {
-        Tracer.d(TAG,"Not supported yet");
+
+    public void updateRecent() {
+        Tracer.d(TAG, "Not supported yet");
     }
-    public void update()
-    {
-        Tracer.d(TAG,"Not supported yet");
+
+    public void update() {
+        Tracer.d(TAG, "Not supported yet");
     }
 
 }
