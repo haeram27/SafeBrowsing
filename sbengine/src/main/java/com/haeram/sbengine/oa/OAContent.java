@@ -59,32 +59,28 @@ public class OAContent {
             threatTypesArray.put("UNWANTED_SOFTWARE");  //Android, Chrome
             threatTypesArray.put("POTENTIALLY_HARMFUL_APPLICATION"); //Android
 
-            /*
-                platformTypes :
-                    PLATFORM_TYPE_UNSPECIFIED
-                    ANDROID
-                    ANY_PLATFORM
-                    CHROME
-                    LINUX
-                    OSX
-                    WINDOWS
-                    IOS
+            /*  platformTypes :
+                https://developers.google.com/safe-browsing/v4/reference/rest/v4/PlatformType
              */
             JSONArray platformTypesArray = new JSONArray();
-            platformTypesArray.put("CHROME");
+            platformTypesArray.put("PLATFORM_TYPE_UNSPECIFIED");
+            platformTypesArray.put("ALL_PLATFORMS");
+            platformTypesArray.put("ANY_PLATFORM");
             platformTypesArray.put("ANDROID");
+            platformTypesArray.put("CHROME");
+            platformTypesArray.put("IOS");
+            platformTypesArray.put("OSX");
+            platformTypesArray.put("WINDOWS");
+            platformTypesArray.put("LINUX");
 
 
-            /*
-                threatEntryTypes :
-                    EXECUTABLE
-                    IP_RANGE
-                    CHROME
-                    THREAT_ENTRY_TYPE_UNSPECIFIED
-                    URL
+            /*  threatEntryTypes :
+                https://developers.google.com/safe-browsing/v4/reference/rest/v4/ThreatEntryType
              */
             JSONArray threatEntryTypesArray = new JSONArray();
+            threatEntryTypesArray.put("THREAT_ENTRY_TYPE_UNSPECIFIED");
             threatEntryTypesArray.put("URL");
+            threatEntryTypesArray.put("EXECUTABLE");
 
 
             //threatEntries
