@@ -23,6 +23,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -133,8 +134,13 @@ public final class OAConnection implements Runnable{
     {
         if (queryType == QueryHandler.QUERY_TYPE_LOOKUP) {
             List<Threat> threatList = OAContent.getLookupResContent(jobj);
-            mHandle.setThreats(threatList);
-            mHandle.onSuccess(threatList.size());
+            if (threatList != null) {
+                mHandle.setThreats(threatList);
+                mHandle.onSuccess(threatList.size());
+            } else {
+                mHandle.setThreats(new ArrayList<Threat>());
+                mHandle.onSuccess(0);
+            }
         }
     }
 
